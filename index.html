@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+        ============================================
+	    Github: github.com/developerzion
+	    Author: Moses Samuel Zion
+	    Website: www.devparse.com 
+	    ============================================
+
+        ==================================================
+	    CREATING A TODO LIST USING JS
+	    ================================================== 
+    -->
+	<title>TODO LIST USING JAVASCRIPT</title>
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+</head>
+	
+<body>
+	<center>
+		<h1>TODO LIST</h1>
+		<h3>Enter text into the input field to add items to your list</h3>
+		<table>
+			<tr>
+				<td><input placeholder="Enter new item..." type="text" id="item" class="items"></td>
+				<td><button class="addbtn" id="add"><span class="fa fa-plus"></span></button></td>
+			</tr>
+		</table>
+        <br>
+        
+        <table width="67%" class="table-bordered table-hover" id="getItems">
+            <tr style="background: #00ffc3;color: white;text-align: center;">
+                <td>List <span class="fa fa-list"></span></td>
+                <td>Action</td>
+            </tr>
+          </table>
+		
+	</center>
+
+
+	<script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function(){
+            listItems()
+        })
+
+		var items = new Array()
+		var additem = document.getElementById("add")
+		var getitems = document.getElementById("getItems")
+
+		additem.onclick = function(){
+			var item = document.getElementById("item").value
+
+			if(item.length < 1){
+				alert("Kindly add at least an item")
+			}
+			else{
+				items.push(item)
+				listItems()
+				document.getElementById("item").value = ""
+                document.getElementById("item").focus();
+			}
+		}
+		function listItems(){
+			getitems.innerHTML = ""
+            
+            if(items.length < 1){
+                getitems.innerHTML += "<tr style='background: #00ffc3;color: white;text-align: center;'>"+
+                "<td>List <span class='fa fa-list'></span></td>"+
+                "<td>Action</td>"
+                "</tr>";
+                getitems.innerHTML += "<tr style='text-align:center'><td colspan='2'>No record</td></tr>"
+            }else{
+                getitems.innerHTML += "<tr style='background: #00ffc3;color: white;text-align: center;'>"+
+                "<td>List <span class='fa fa-list'></span></td>"+
+                "<td>Action</td>"
+                "</tr>";
+                for(i=0; i<items.length;i++){
+                    var data = items[i]
+                    getitems.innerHTML += `<tr style='text-align:center'>
+                            <td>${data}</td>
+                            <td><button class='btn-danger' data-id=${i}>x</button></td>
+                            </tr>`
+                }
+            }
+		}
+
+
+		document.getElementById("getItems").addEventListener('click', function(event){
+           
+			if(event.target.className === 'btn-danger'){
+				var rowid = event.target.dataset.id
+				deleteRow(rowid)
+				listItems()
+			}
+		})
+
+		function deleteRow(id){
+			items.splice(id, 1)
+		}	
+
+		
+	</script>
+</body>
+</html>
