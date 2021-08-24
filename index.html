@@ -20,12 +20,16 @@
 	
 <body>
 	<center>
-		<h1>TODO LIST</h1>
+		<h1>ARRAY TODO LIST</h1>
 		<h3>Enter text into the input field to add items to your list</h3>
 		<table>
 			<tr>
 				<td><input placeholder="Enter new item..." type="text" id="item" class="items"></td>
-				<td><button class="addbtn" id="add"><span class="fa fa-plus"></span></button></td>
+				<td>
+                    <button class="addbtn" id="add"><span class="fa fa-plus"> PUSH</span></button>
+                    <button class="btn-danger" onclick="pop()"><span class="fa fa-trash"> POP</span></button>
+                    <button class="btn-danger" onclick="shift()"><span class="fa fa-trash"> SHIFT</span></button>
+                </td>
 			</tr>
 		</table>
         <br>
@@ -64,6 +68,7 @@
 			}
 		}
 		function listItems(){
+
 			getitems.innerHTML = ""
             
             if(items.length < 1){
@@ -85,11 +90,9 @@
                             </tr>`
                 }
             }
-		}
-
-
-		document.getElementById("getItems").addEventListener('click', function(event){
-           
+        }
+        
+		document.getElementById("getItems").addEventListener('click', function(event){           
 			if(event.target.className === 'btn-danger'){
 				var rowid = event.target.dataset.id
 				deleteRow(rowid)
@@ -97,9 +100,20 @@
 			}
 		})
 
+        //SPLICE-> Deletes element of a given index
 		function deleteRow(id){
 			items.splice(id, 1)
-		}	
+		}
+        //POP-> Deletes the last element in an array	
+        function pop(){
+            items.pop()
+			listItems()
+        }
+        //SHIFT-> Deletes the first element in an array
+        function shift(){
+            items.shift()
+			listItems()
+        }
 
 		
 	</script>
